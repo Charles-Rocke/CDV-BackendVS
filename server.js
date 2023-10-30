@@ -7,7 +7,10 @@ const cors = require("cors");
 require("dotenv").config();
 
 // Comment/Un-comment these lines (this is dev environment code)
-// const frontendPublicDirectory = path.join(__dirname, "../frontend/CDV-Test/public");
+// const frontendPublicDirectory = path.join(
+//   __dirname,
+//   "../frontend/CDV-Test/public"
+// );
 // const frontendDirectory = path.join(__dirname, "../frontend/CDV-Test");
 // const indexPath = path.join(frontendDirectory, "index.html");
 
@@ -16,6 +19,7 @@ const frontendBaseUrl =
   process.env.FRONTEND_BUILD_PATH ||
   path.join(__dirname, "../frontend/CDV-Test"); // Replace with your actual deployed URL
 
+const frontendPublicDirectory = path.join(`${frontendBaseUrl}`, `/public`);
 // Use the base URL to construct URLs for assets
 const indexPath = `${frontendBaseUrl}/index.html`;
 
@@ -76,10 +80,13 @@ app.post("/convert", async (req, res) => {
     const browser = await puppeteer.launch({
       args: ["--no-sandbox"],
     });
+    console.log("page var");
     const page = await browser.newPage();
-    await page.goto(`file://${indexPath}`, {
+    console.log("got page var");
+    await page.goto(`${indexPath}`, {
       waitUntil: "networkidle2",
     });
+    console.log("awaiting finished");
     for (const inputFieldId in inputFieldValues) {
       if (inputFieldValues.hasOwnProperty(inputFieldId)) {
         const inputValue = inputFieldValues[inputFieldId];
