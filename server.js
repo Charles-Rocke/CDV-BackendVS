@@ -12,7 +12,9 @@ require("dotenv").config();
 // const indexPath = path.join(frontendDirectory, "index.html");
 
 // connect to frontend build assets
-const frontendBaseUrl = ""; // Replace with your actual deployed URL
+const frontendBaseUrl =
+  process.env.FRONTEND_BUILD_PATH ||
+  path.join(__dirname, "../frontend/CDV-Test"); // Replace with your actual deployed URL
 
 // Use the base URL to construct URLs for assets
 const indexPath = `${frontendBaseUrl}/index.html`;
@@ -55,17 +57,14 @@ app.use(
 
 app.use("/node_modules", express.static(path.join(__dirname, "node_modules")));
 
-const reactAppDirectory = path.join(
-  __dirname,
-  "../frontend/CDV-TEST/index.html"
-);
+const reactAppDirectory = path.join(__dirname, indexPath);
 
 app.use(express.static(reactAppDirectory));
 
 app.use(express.json());
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(reactAppDirectory, "index.html"));
+  res.sendFile(path.join(reactAppDirectory, ""));
 });
 
 app.post("/convert", async (req, res) => {
