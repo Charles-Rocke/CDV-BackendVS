@@ -5,20 +5,24 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const cors = require("cors");
 require("dotenv").config();
-const frontendPublicDirectory = path.join(
-  __dirname,
-  "../frontend/CDV-Test/public"
-);
-const frontendDirectory = path.join(__dirname, "../frontend/CDV-Test");
-const indexPath = path.join(frontendDirectory, "index.html");
+
+// Comment/Un-comment these lines (this is dev environment code)
+// const frontendPublicDirectory = path.join(__dirname, "../frontend/CDV-Test/public");
+// const frontendDirectory = path.join(__dirname, "../frontend/CDV-Test");
+// const indexPath = path.join(frontendDirectory, "index.html");
+
+// connect to frontend build assets
+const frontendBaseUrl = ""; // Replace with your actual deployed URL
+
+// Use the base URL to construct URLs for assets
+const indexPath = `${frontendBaseUrl}/index.html`;
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-const supabaseUrl = "https://enssmnohepficaxcmyjb.supabase.co";
-const supabaseApiKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVuc3Ntbm9oZXBmaWNheGNteWpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY5Nzk4MDgsImV4cCI6MjAxMjU1NTgwOH0.asLCggvlojyU2WlGmlAUAaNjC2LDEYHIyicJynvFkVk";
-const bucketName = "cdvuploads";
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseApiKey = process.env.SUPABASE_API_KEY;
+const bucketName = process.env.SUPABASE_BUCKET_NAME;
 const supabase = createClient(supabaseUrl, supabaseApiKey);
 
 app.use(cors());
