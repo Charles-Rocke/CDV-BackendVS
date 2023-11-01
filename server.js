@@ -31,7 +31,18 @@ const supabaseApiKey = process.env.SUPABASE_API_KEY;
 const bucketName = process.env.SUPABASE_BUCKET_NAME;
 const supabase = createClient(supabaseUrl, supabaseApiKey);
 
-app.use(cors());
+const allowedOrigins = ["https://main--tubular-piroshki-132d7c.netlify.app"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 
 app.use(
   express.static(path.join(__dirname, "public"), {
