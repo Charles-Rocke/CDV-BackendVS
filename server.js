@@ -61,7 +61,8 @@ app.use(
 
 app.use("/node_modules", express.static(path.join(__dirname, "node_modules")));
 
-const reactAppDirectory = path.join(indexPath, "");
+// const reactAppDirectory = path.join(__dirname, indexPath);
+const reactAppDirectory = path.join(frontendBaseUrl, "");
 
 app.use(express.static(reactAppDirectory));
 
