@@ -61,7 +61,7 @@ app.use(
 
 app.use("/node_modules", express.static(path.join(__dirname, "node_modules")));
 
-const reactAppDirectory = path.join(__dirname, indexPath);
+const reactAppDirectory = path.join(indexPath, "");
 
 app.use(express.static(reactAppDirectory));
 
@@ -117,10 +117,10 @@ app.post("/convert", async (req, res) => {
     console.log(fileName);
 
     // Define the path where you want to save the screenshot
-    const screenshotPath = path.join(frontendPublicDirectory, fileName);
+    // const screenshotPath = path.join(frontendPublicDirectory, fileName);
 
     // Save the screenshot using the constructed filename
-    fs.writeFileSync(screenshotPath, screenshot);
+    // fs.writeFileSync(screenshotPath, screenshot);
 
     // Create a Blob from the image data
     const screenshotBlob = new Blob([screenshot]);
